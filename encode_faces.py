@@ -6,6 +6,8 @@ import argparse
 import pickle
 import cv2
 import os
+import numpy as np
+
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--dataset", required=True,
