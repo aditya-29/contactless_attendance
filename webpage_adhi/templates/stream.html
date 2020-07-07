@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance System</title>
+    <title>Admin Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/stream.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/stream.css"> -->
+
 </head>
+
 <body>
-<h2>hey you logged in !!!</h2>    
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Admin Panel</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Attendance</a></li>
+                <li><a href="#">New Employee</a></li>
+                <li><a href="#">Link</a></li>
+            </ul>
+            <a href=/logout> <input class="btn btn-danger navbar-btn" type=”button” value="logout"></a>
+            <!-- <button class="btn btn-danger navbar-btn" action="/logout" method="post">Logout</button> -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Navbar Button</h2>
+        <p>Use the navbar-btn class on a button to vertically align (same padding as links) it inside the navbar.</p>
+    </div>
+
 </body>
+
 </html>

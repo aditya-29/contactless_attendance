@@ -1,0 +1,11 @@
+.navbar-btn {
+    float: right;
+    width: 75px;
+}
+
+
+@media (max-width: 767px) {
+    .navbar-btn {
+        float: left;
+    }
+}
