@@ -1,0 +1,109 @@
+body {
+    background-color: #efefef;
+    max-width: 100vw;
+    /* overflow:hidden; */
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: row; */
+    /* height: fit-content; */
+    justify-content: center;
+    max-width: 100vw;
+    align-content: center;
+}
+
+.card-out {
+    padding: 30px 30px 30px 30px;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    background-color: #fefefe;
+    width: fit-content;
+    margin: auto;
+    ;
+}
+
+
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 2px 16px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    /* margin-bottom: 5vh; */
+    width: 25vw;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+}
+
+#info {
+    text-align: center;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+}
+
+.box {
+    background-color: #efefef;
+    border: none;
+    font-size: 20px;
+}
+
+
+.button {
+    display: inline-block;
+    background-color: #4CAF50;
+    border: 0.5rem solid #4caf50;
+    border-radius: 2em;
+    width:120px;
+    box-sizing: border-box;
+    color: white;
+    padding: 16px 32px;
+    /* font-weight: 300; */
+    font-size: 24px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+}
+ 
+
+.button:hover {
+    background-color: #4CAFaa;
+    /* border: 0.5rem solid #000000; */
+}
+
+.button:active {
+    outline: none;
+}
+
+#btn-box {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.footer {
+    background-color: #222222;
+    height:10vh;
+    text-align: center;
+    padding-top: 2.5vh;
+}
+.foot-text {
+    color: #fefefe;
+}

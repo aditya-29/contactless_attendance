@@ -3,9 +3,13 @@
     width: 75px;
 }
 
+.link:active {
+    background: #303030;
+}
+
 
 @media (max-width: 767px) {
     .navbar-btn {
         float: left;
     }
-}
+}       
