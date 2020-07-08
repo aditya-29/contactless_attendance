@@ -10,7 +10,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/master.css') }}">
+    <link rel="stylesheet" type="text/css" href="../static/styles/register.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/register.css') }}">
+
 
 </head>
 
@@ -22,20 +26,148 @@
                 <a class="navbar-brand" href="#">Admin Panel</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="link"><a href=/attendance>Attendance</a></li>
-                <li class="link active"><a href=/register>New Employee</a></li>
-                <li class="link"><a href=/link>Link</a></li>
-            </ul>
-            <a href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
-            <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
+                <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link active"><a href=/register>New
+                            Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a href=/logout>
+                                <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
+                            <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
         </div>
     </nav>
 
-    <div class="container">
-        <h2>Navbar Button</h2> 
-        <p>Use the navbar-btn class on a button to vertically align (same padding as links) it inside the navbar.</p>
+    <div id="info">
+        <h2>Register New Users</h2>
     </div>
+    <form action="/take_photos" method="post">
+        <div class="content">
 
+            <div class="card-out">
+                <div class="card">
+                    <div class="container">
+                        <div class="fields" action=/take_photos method="post">
+                            <h3 class="text"> Employee ID</h3>
+                            <input class="box" type="text" name="id" placeholder="ID" />
+
+                            <h3 class="text"> Employee Name</h3>
+                            <input class="box" type="text" name="name" placeholder="Name" />
+
+                            <h3 class="text"> Employee Category</h3>
+                            <input class="box" type="text" name="category" placeholder="Category" />
+
+                            <h3 class="text"> Employee Department</h3>
+                            <input class="box" type="text" name="department" placeholder="Department" />
+
+                            <h3 class="text"> Employee Age</h3>
+                            <input class="box" type="text" name="age" placeholder="Age" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-out">
+                <div class="card">
+                    <div class="container">
+                        <div class="fields" action=/take_photos method="post">
+                            <h3 class="text"> Address Line-1</h3>
+                            <input class="box" type="text" name="add line1" placeholder="line-1" />
+
+                            <h3 class="text"> Address Line-2</h3>
+                            <input class="box" type="text" name="add line2" placeholder="line-2" />
+
+                            <h3 class="text"> City/Village</h3>
+                            <input class="box" type="text" name="add city/village" placeholder="city/village" />
+
+                            <h3 class="text"> District</h3>
+                            <input class="box" type="text" name="add district" placeholder="district" />
+
+                            <h3 class="text"> State</h3>
+                            <input class="box" type="text" name="add state" placeholder="state" />
+
+                            <h3 class="text"> PIN Code</h3>
+                            <input class="box" type="text" name="add pin" placeholder="pin code" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-out">
+                <div class="card">
+                    <div class="container">
+                        <div class="fields" action=/take_photos method="post">
+                            <h3 class="text"> S/o. D/o. W/o.</h3>
+                            <input class="box" type="text" name="s/o" placeholder="S/o" />
+
+                            <h3 class="text"> Father's Name</h3>
+                            <input class="box" type="text" name="father's name" placeholder="name" />
+
+                            <h3 class="text"> Mother's Name</h3>
+                            <input class="box" type="text" name="mother's name" placeholder="name" />
+
+                            <h3 class="text"> Nominee Name</h3>
+                            <input class="box" type="text" name="nominee's name" placeholder="name" />
+
+                            <h3 class="text"> Relationship to Nominee</h3>
+                            <input class="box" type="text" name="nominee's relationship" placeholder="eg: husband" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-out">
+                <div class="card">
+                    <div class="container">
+                        <div class="fields" action=/take_photos method="post">
+                            <h3 class="text"> Educational Qualifications</h3>
+                            <input class="box" type="text" name="edu quali" placeholder="eg: MBA" />
+
+                            <h3 class="text"> Previous Work Experience</h3>
+                            <input class="box" type="text" name="work exp" placeholder="eg: Manager" />
+
+                            <h3 class="text"> Date of Joining</h3>
+                            <input class="box" type="text" name="doj" placeholder="date" />
+
+                            <h3 class="text"> ESI</h3>
+                            <input class="box" type="text" name="esi" placeholder="ESI" />
+
+                            <h3 class="text"> PF</h3>
+                            <input class="box" type="text" name="pf" placeholder="PF" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-out">
+                <div class="card">
+                    <div class="container">
+                        <div class="fields" action=/take_photos method="post">
+                            <h3 class="text"> Mobile Number</h3>
+                            <input class="box" type="text" name="mobile" placeholder="Mobile" />
+
+                            <h3 class="text"> Alternate Mobile Number</h3>
+                            <input class="box" type="text" name="alternate mobile" placeholder="Mobile" />
+
+                            <h3 class="text"> Email ID</h3>
+                            <input class="box" type="text" name="email" placeholder="xyz@abc.com" />
+
+                            <h3 class="text"> Aadhar Number</h3>
+                            <input class="box" type="text" name="aadhar" placeholder="aadhar" />
+
+                            <h3 class="text"> PAN Number</h3>
+                            <input class="box" type="text" name="pan" placeholder="PAN" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="btn-box">
+            <button type="submit" class="button" value="next">next</button>
+
+        </div>
+    </form>
+
+    <div class="footer">
+        <h4 class="foot-text">Created by aditya29</h4>
+    </div>
 </body>
 
 </html>
