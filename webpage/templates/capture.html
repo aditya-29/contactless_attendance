@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/master.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/link.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/link.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Admin Panel</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link"><a href=/register>New
+                            Employee</a> </li> <li class="link active"><a href=/capture>Capture </a> </li> </ul> <a
+                                href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
+                            <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="card-out img-card">
+            <div id="camera" class="card">
+                <img src="{{ url_for('video_feed') }}" alt="video feed">
+            </div>
+        </div>
+        <div class="content-review">
+            <form action= "/save_pic" method="post">
+
+                <div class="card-out card-out-rev">
+                    <div class="card">
+                        <div class="container">
+                            <div class="fields" action="/details" method="post">
+                                <h3 class="text"> Employee ID</h3>
+                                <input class="box" type="text" name="id" placeholder="ID" required="required" />
+
+                                <h3 class="text"> Password</h3>
+                                <input class="box" type="password" name="pwd" placeholder="Admin Password"
+                                    required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="btn-box">
+                    <!-- <a href=/save_pic> <input class="button" value="Take Photo" /></a>
+                    <a href=/capture> <input class="button" value="Over-Ride" /></a>
+                    <a href=/capture> <input class="button" value="Over-Ride" /></a> -->
+                    <button type="submit" class="button" name="button" value="Take Photo">Take Photo</button>
+                    <a href=/train> <input class="button" value="Train" /></a>
+                    <!-- <button type="submit" class="button">over-ride</button> -->
+
+                </div>
+                {% if error %}
+                <p class="error"><strong>INFO:</strong> {{ error }}
+              {% endif %}
+            </form>
+
+        </div>
+    </div>
+    <div class="footer">
+        <h4 class="foot-text">Created by aditya29</h4>
+    </div>
+
+</body>
+
+</html>

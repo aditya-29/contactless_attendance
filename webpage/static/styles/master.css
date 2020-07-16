@@ -1,0 +1,21 @@
+.navbar-btn {
+    float: right;
+    width: 75px;
+}
+
+.link:active {
+    background: #303030;
+}
+
+
+@media (max-width: 767px) {
+    .navbar-btn {
+        float: left;
+    }
+}       
+
+.error {
+    font-size: 18px;
+    font-weight:300;
+    transition: ;
+}
