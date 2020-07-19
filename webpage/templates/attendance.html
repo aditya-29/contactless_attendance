@@ -21,11 +21,25 @@
 
 <body>
     <div class="alert-container">
-        <div class="alert" id="alert">
-            <p id="err-msg"></p>
+        <div class="alert">
+            <p id="err-msg">Video Feed Started</p>
             <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
         </div>
     </div>
+    
+    {% block content %}
+    <div class="alert-container-left">
+        {% for message in get_flashed_messages() %}
+        <div class="alert-left">
+            <p id="err-msg-left">{{ message }}</p>
+            <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
+        </div>
+        {% endfor %}
+
+        {% block page_content %}{% endblock %}
+    </div>
+    {% endblock %}
+
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -67,10 +81,6 @@
                             <div class="fields">
                                 <h3 class="text"> Employee ID</h3>
                                 <input class="box" type="text" name="id" placeholder="ID" required="required" />
-
-                                <!-- <h3 class="text"> Employee Name</h3>
-                                <input class="box" type="text" name="name" placeholder="Name" required="required" /> -->
-
                                 <h3 class="text"> Password</h3>
                                 <input class="box" type="password" name="pwd" placeholder="Admin Password"
                                     required="required" />
@@ -82,7 +92,7 @@
                 <div id="btn-box">
                     <!-- <a href=/override> <input class="button" value="Over-Ride" /></a> -->
                     <!-- <a> <input class="button" value="Manual Entry" /></a> -->
-                    <button type="submit" class="button" name="button" value="Manual Entry">Manual Entry</button>
+                    <button type="submit" onclick='error("successfully submitted")' class="button" name="button" value="Manual Entry">Manual Entry</button>
 
                 </div>
             </form>
@@ -95,16 +105,20 @@
         <h4 class="foot-text">Created by aditya29</h4>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        // this.document.getElementsByClassName("alert").style.display = "none";
-        var temp;
+        $('.alert-container').fadeToggle();
         var alert_cls = this.document.getElementsByClassName("alert");
+        var visib = $(".alert-container");
+        var hid = $(".alert-container");
 
-        function disappear() {
-            this.document.getElementByClass("alert").style.display = 'none';
+        function error (msg) {
+            // $('.alert-container-left').fadeToggle();
+            this.document.getElementById("err-msg").innerText = "Duplicate person Detected";
+            $('.alert-container-left').delay(1000).fadeToggle();
+
         }
-
 
         function clear_text() {
             this.document.getElementById("eid").innerText = "Nill";
@@ -114,33 +128,37 @@
             console.log("resetted");
             setTimeout(fetch_cont, 1000);
         }
-
         async function fetch_cont() {
             let result = await (fetch("/attendance_results"));
-            let data = await (result.clone().json())
+            let data = await (result.clone().json());
 
             if (data !== null) {
-                this.document.getElementById("alert").style.display = "none";
                 this.document.getElementById("eid").innerText = data["id"];
                 this.document.getElementById("ename").innerText = data["name"];
                 this.document.getElementById("entry-time").innerText = data["entry"];
-                this.document.getElementById("exit-time").innerText = data["exit"];
                 if (data["dup"] == "True") {
-                    console.log("duplicate detected");
-                    this.document.getElementById("err-msg").innerText = "Duplicate person Detected"
-                    this.document.getElementsByClassName("alert")[0].style.display = "flex"
-                    this.document.getElementsByClassName("alert")[0].style.display = "none"
 
+                    $('.alert-container').fadeToggle();
+                    $('.alert-container').delay(1000).fadeToggle();
+
+
+                    console.log("duplicate detected");
+                    this.document.getElementsByClassName("alert")[0].style.backgroundColor = "#f44336";
+                    this.document.getElementById("err-msg").innerText = "Duplicate person Detected";
+                    this.document.getElementById("exit-time").innerText = "NIll";
 
                 } else {
+                    $('.alert-container').fadeToggle();
+                    $('.alert-container').delay(1000).fadeToggle();
+
                     this.document.getElementById("err-msg").innerText = "Attendance Registered !";
-                    this.document.getElementsByClassName("alert")[0].style.background.color = "green";
-                    this.document.getElementsByClassName("alert")[0].style.display = "flex";
-                    this.document.getElementsByClassName("alert")[0].style.display = "none"
+                    this.document.getElementsByClassName("alert")[0].style.backgroundColor = "green";
+                    this.document.getElementById("exit-time").innerText = data["exit"];
 
                     console.log("no duplicate detected");
                 }
                 setTimeout(clear_text, 1500);
+
             } else {
                 setTimeout(fetch_cont, 500);
             }

@@ -12,15 +12,7 @@
     .navbar-btn {
         float: left;
     }
-}       
-
-.error {
-    font-size: 18px;
-    font-weight:300;
-    transition: ;
 }
-
-
 
 .alert-container {
     height: 60px;
@@ -36,10 +28,55 @@
     flex-flow: nowrap;
 }
 
-#err-msg {
-    width:20vw;
+.alert-container-left {
+    height: 60px;
+    position: absolute;
+    top: 10%;
+    left: 73vw;
+    right: 2vw;
+    /* left: 2vw;
+    width: 25vw; */
+    float: left;
+    display: flex;
+    flex-direction: column;
+    flex-flow: nowrap;
+}
+
+#err-msg-left {
+    width: 20vw;
     margin-left: 1vw;
 }
+
+#err-msg {
+    width: 20vw;
+    margin-left: 1vw;
+}
+
+.alert-left {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: white;
+    height: 60px;
+    opacity: 1;
+    background-color: #f44336;
+    animation: anim ease-in-out 4s both;
+    font-size: 24px;
+}
+
+
+@keyframes anim {
+    0%,
+    100% {
+        opacity: 0
+    }
+
+    40% {
+        opacity: 1
+    }
+}
+
 
 
 .alert {
@@ -49,16 +86,11 @@
     flex-wrap: wrap;
     color: white;
     height: 60px;
+    opacity: 1;
     background-color: #f44336;
-    animation: fade 5s ease-out forwards;
+    animation: anim 4s both;
     font-size: 24px;
-
 }
-
-@keyframes fade {
-    0%, 100% { opacity: 0 }
-    50% { opacity: 1 }
-  }
 
 
 .close-btn {
@@ -80,5 +112,5 @@
 
 .close-btn:hover {
     color: black;
-    background-color: rgb(255,255,255,0.4);
+    background-color: rgb(255, 255, 255, 0.4);
 }

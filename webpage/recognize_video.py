@@ -21,6 +21,7 @@ iter_names = {}
 
 
 time_interval = 60
+
 users_list = pd.read_excel("../admin/users.xlsx")
 
 entry_list = pd.read_excel(xl_file)

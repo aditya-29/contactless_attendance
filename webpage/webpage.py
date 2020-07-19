@@ -77,8 +77,8 @@ def attendance():
     print("[INFO] attendance thread started")
     path = u.logs_check()
     print(str_res)
-    if str_res != None:
-        flash([str_res["name"], str_res["id"], str_res["entry"], str_res["exit"],str_res["dup"]])
+    # if str_res != None:
+    #     flash([str_res["name"], str_res["id"], str_res["entry"], str_res["exit"],str_res["dup"]])
     return render_template("attendance.html")
 
 
@@ -116,14 +116,16 @@ def manual():
 
     id = request.form["id"]
     id = str(id).upper()
-    temp_pwd = request.form["pwd"]
+    temp_pwd = str(request.form["pwd"])
 
     if temp_pwd == pwd:
         recog.update_sheet(str(id))
-        return render_template("./attendance.html", error="Added Successfully")
+        flash("registered successfully !")
+        return redirect("attendance")
 
     else:
-        return render_template("./attendance.html", error="invalid admin password")
+        flash("invalid username / password")
+        return redirect("attendance")
 
 
 @app.route('/video_feed')
@@ -154,9 +156,9 @@ def capture():
     if temp_pwd == pwd:
         camera = Camera()
         stamp = camera.capture(id) 
-        return render_template("/capture.html", error="Photo taken Successfully")
+        return render_template("/capture.html")
     else:
-        return render_template("/capture.html", error = "Invalid Password")
+        return render_template("/capture.html")
 
 
 @app.route("/take_photos", methods = ["POST", "GET"])
