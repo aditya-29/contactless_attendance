@@ -18,6 +18,18 @@
 </head>
 
 <body>
+    {% block content %}
+    <div class="alert-container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert">
+            <p id="msg">{{ message }}</p>
+            <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
+        </div>
+        {% endfor %}
+
+        {% block page_content %}{% endblock %}
+    </div>
+    {% endblock %}
 
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">

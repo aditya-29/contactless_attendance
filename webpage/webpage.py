@@ -166,7 +166,8 @@ def capture():
 def retrieve_details(): 
     r = request
     u.add_user(r)
-    return redirect(url_for("view_page"))
+    flash("user added successfully")
+    return redirect(url_for("register"))
 
 @app.route("/train", methods = ["POST", "GET"])
 

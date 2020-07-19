@@ -19,6 +19,21 @@
 </head>
 
 <body>
+    <!-- {% block content %} -->
+    <div class="alert-container-left">
+        <!-- {% for message in get_flashed_messages() %} -->
+        <div class="alert-left">
+            <div id="err-msg-cont">
+            <p id="err-msg">{{ message }}</p>
+            </div>
+            <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
+        </div>
+        <!-- {% endfor %} -->
+
+        <!-- {% block page_content %}{% endblock %} -->
+    </div>
+    <!-- {% endblock %} -->
+
 
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -27,8 +42,8 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link active"><a href=/register>New
-                            Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a href=/logout>
-                                <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
+                            Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a
+                                href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
                             <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
         </div>
     </nav>
@@ -43,14 +58,27 @@
                 <div class="card">
                     <div class="container">
                         <div class="fields" action=/take_photos method="post">
-                            <h3 class="text"> Employee ID</h3>
-                            <input class="box" type="text" name="id" placeholder="ID" />
+                            <h6></h6>
+                            <div style="display: 'flex'; flex-direction: 'column';">
+                                <h3 class="text req"> Employee ID</h3>
+                                <h3 class="text req" style="color: red;"> * </h3>
+                            </div>
+                            <input class="box" type="text" name="id" placeholder="ID" required="required" style="margin-top: 0.5em;" />
 
-                            <h3 class="text"> Employee Name</h3>
-                            <input class="box" type="text" name="name" placeholder="Name" />
+                            <h6></h6>
+                            <div style="display: 'flex'; flex-direction: 'column';">
+                                <h3 class="text req"> Employee Name</h3>
+                                <h3 class="text req" style="color: red;"> * </h3>
+                            </div>
+                            <input class="box" type="text" name="name" placeholder="Name" required="required" style="margin-top: 0.5em;"/>
 
-                            <h3 class="text"> Employee Category</h3>
-                            <input class="box" type="text" name="category" placeholder="Category" />
+                            <h6></h6>
+                            <div style="display: 'flex'; flex-direction: 'column';">
+                                <h3 class="text req"> Employee Category</h3>
+                                <h3 class="text req" style="color: red;"> * </h3>
+                            </div>
+                            <input class="box" type="text" name="category" placeholder="Category" required="required" style="margin-top: 0.5em;"/>
+
 
                             <h3 class="text"> Employee Department</h3>
                             <input class="box" type="text" name="department" placeholder="Department" />
