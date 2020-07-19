@@ -1,14 +1,17 @@
 import os
-from flask import Flask, request, render_template, Response, url_for, redirect
+from flask import Flask, request, render_template, Response, url_for, redirect, flash
 import utils as u
 from camera import Camera
 from recognize_video import Camera as Camera_recog
 import sys
 import encode_faces as ef
 import recognize_video as recog
+import json
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+str_res = None
 
 camera = None
 camera_recog = None
@@ -35,19 +38,20 @@ def main():
 
 #retriving auth.xlsx
 
-@app.route("/take_attendance", methods = ["POST", "GET"])
+@app.route("/login", methods = ["POST", "GET"])
 
 def login():   #cross check the login information
     global pwd
 
     id = request.form["id"]
-    id = str(id)
-    name = request.form["username"]
-    pwd = request.form["password"]
+    id = str(id).upper()
+    name = str(request.form["username"])
+    pwd = str(request.form["password"])
 
     res = u.authenticate(id, name, pwd)
     if not res:
-        return render_template("/index.html", error="invalid user/password")
+        flash('username / password incorrect')
+        return render_template("index.html")
     else:
         path = u.logs_check()
         return redirect(url_for("attendance"))
@@ -58,11 +62,23 @@ def logout():
     return render_template("index.html")
 
 
+def gen_res():
+    json_str = json.dumps(str_res)
+    yield json_str
+
+
+@app.route("/attendance_results", methods = ["POST", "GET"])
+def attendance_results():
+    return Response(gen_res(), content_type="application/json")
+
 @app.route("/attendance", methods = ["POST", "GET"])
 
 def attendance():
     print("[INFO] attendance thread started")
     path = u.logs_check()
+    print(str_res)
+    if str_res != None:
+        flash([str_res["name"], str_res["id"], str_res["entry"], str_res["exit"],str_res["dup"]])
     return render_template("attendance.html")
 
 
@@ -75,16 +91,17 @@ def register():
     return render_template("register.html")
 
 def gen(camera):
+    global str_res
     while True:
-        frame = camera.get_feed()
+        frame, str_res = camera.get_feed()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-def gen_recog(camera_recog):
-    while True:
-        frame = camera_recog.get_feed()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+# def gen_recog(camera_recog):
+#     while True:
+#         frame = camera_recog.get_feed()
+#         yield (b'--frame\r\n'
+#                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route("/capture", methods=["POST", "GET"])
@@ -119,9 +136,13 @@ def video_feed():
 
 @app.route("/video_feed_attendance")
 def video_feed_attendance():
+    global str_res
     print("[INFO] video feed thread started")
     camera_recog = Camera_recog()
-    return Response(gen(camera_recog),
+    gen_res = gen(camera_recog)
+
+    # print("-----res------", str_res)
+    return Response(gen_res,
         mimetype='multipart/x-mixed-replace; boundary=frame')
     
 

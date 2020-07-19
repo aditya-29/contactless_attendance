@@ -138,21 +138,23 @@ def add_user(r):
     print("sheet updated")
 
 def authenticate(id, username, pwd):
-    id = str(id)
     usernames = list(auth["name"])
     ids = list(auth["id"])
     pwds = list(auth["pwd"])
+
+    usernames = list(map(str, usernames))
+    ids = list(map(str, ids))
+    pwds = list(map(str, pwds))
 
     print(usernames)
     print(ids)
     print(pwds)
 
     if id in ids:
-        index = (auth["id"] == id).index
+        index = list(auth[auth["id"] == id].index)[-1]
         print(index)
-        index = (auth["id"] == id).index[-1]
         print("index : ",index)
-        if usernames[index]==username and str(pwds[index]) == pwd:
+        if usernames[index]==username and pwds[index] == pwd:
             print("authenticated")
             return True
     print("authenticaion error occured")

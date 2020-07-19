@@ -168,3 +168,61 @@ input {
 input:focus {
     box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
 }
+
+.alert-container {
+    height: 50px;
+    position: absolute;
+    top: 5%;
+    left: 73vw;
+    right: 2vw;
+    width: 25vw;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    flex-flow: nowrap;
+}
+
+#msg {
+    width:20vw;
+    margin-left: 1vw;
+}
+
+
+.alert {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: white;
+    background-color: #f44336;
+    animation: fade 2s ease-out forwards;
+
+}
+
+@keyframes fade {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+  }
+
+
+.close-btn {
+    float: right;
+    margin: auto;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    width: auto;
+    /* padding: 10px 7px 0px 7px; */
+    margin-left: 10px;
+    margin-right: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: width 0.3s;
+    /* transform: ease-in e; */
+}
+
+.close-btn:hover {
+    color: black;
+    background-color: rgb(255,255,255,0.4);
+}

@@ -3,16 +3,24 @@ import face_recognition
 import argparse
 import imutils
 import pickle
-import time
+import time as Time
 import cv2
 import pandas as pd
 from datetime import datetime as dt
 import utils as u
+from time import time
+
+
 
 xl_file = u.logs_check()
 
+iter = 0
+temp_names = []
+limit_thresh = 10
+iter_names = {}
 
-time_interval = 10
+
+time_interval = 60
 users_list = pd.read_excel("../admin/users.xlsx")
 
 entry_list = pd.read_excel(xl_file)
@@ -25,9 +33,10 @@ def refresh():
     return entry_list
 
 def get_name(id):
-    # id = str(id)
     index = users_list.index[(users_list["id"])==(id)].tolist()
-    # print(index, type(index))
+
+    if index == []:
+        return None, None
     return(users_list.iloc[index[0], 2], users_list.iloc[int(index[0]), 3])
 
 def check_dup(id,now):
@@ -50,12 +59,13 @@ def check_dup(id,now):
         return None
 
 
-
 def update_sheet(id,duplicate_check = True):
     global entry_list
 
     now = dt.now()
     name, cat = get_name(id)
+    if name == None:
+        return
     print("[INFO] NAME : ", name, " CAT : " ,cat)
 
     if duplicate_check:
@@ -71,37 +81,56 @@ def update_sheet(id,duplicate_check = True):
         else:
             serial_no = entry_list["s.no"].to_list()[-1]+1
 
+        entry_time = now.strftime("%H:%M:%S")
+
         row = {"s.no" : serial_no, 
                 "name" : name,
                 "id" : str(id),
                 "category" : cat, 
-                "entry_time" : now.strftime("%H:%M:%S"),
+                "entry_time" : entry_time,
                 "exit_time" : ""}
 
         entry_list = entry_list.append(row, ignore_index = True)
 
 
         entry_list.to_excel(xl_file, index = False)
-        time.sleep(0.5)
+        Time.sleep(0.5)
         entry_list = refresh()
         # print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
+        return {"entry" : entry_time, "exit" : "NILL", "id" : str(id), "name": name, "dup" : "False"}
             
     elif check == "exit":           #directs to exit route
         print("---------------exit-------------")
         index = entry_list.index[entry_list["id"] == id].tolist()
         index = int(index[-1])
-        entry_list.iloc[index, 5] = now.strftime("%H:%M:%S")
+
+        name = entry_list.iloc[index, 1]
+        id = entry_list.iloc[index, 2]
+        entry_time = entry_list.iloc[index, 4]
+        exit_time = now.strftime("%H:%M:%S")
+
+        entry_list.iloc[index, 5] = exit_time
 
         entry_list.to_excel(xl_file, index = False)
         entry_list = refresh()
         print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
+        return {"entry": entry_time, "exit" : exit_time, "id": str(id), "name": name, "dup" : "False"}
 
-    else:                                       #duplicate access
+    else:     
+        index = entry_list.index[entry_list["id"] == id].tolist()
+        index = int(index[-1])
+
+        name = entry_list.iloc[index, 1]
+        id = entry_list.iloc[index, 2]
+        entry_time = entry_list.iloc[index, 4]
+        exit_time = entry_list.iloc[index, 5]                                 #duplicate access
         print("")
         print('duplicate person detected')
         print("")
+        return {"entry" : entry_time, "exit" : exit_time, "id" : str(id), "name" : name, "dup": "True"}
+
 
 
 
@@ -116,7 +145,7 @@ class Camera(object):
         self.data = pickle.loads(open("encodings", "rb").read())
 
         print("[INFO] starting video stream...")
-        time.sleep(2.0)
+        Time.sleep(2.0)
 
     
     def __del__(self):
@@ -124,12 +153,14 @@ class Camera(object):
         self.video.release()
 
     def get_feed(self):
-        frame = self.get_frame()
+        frame,res = self.get_frame()
         if frame is not None:
             ret, jpeg = cv2.imencode('.jpg', frame)
-            return jpeg.tobytes()
+            return jpeg.tobytes(), res
 
     def get_frame(self):
+        global limit_thresh, iter, iter_names
+        now = time()
         success, frame = self.video.read()
 
         if not success:
@@ -185,14 +216,27 @@ class Camera(object):
             y = top - 15 if top - 15 > 15 else top + 15
             cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                 0.75, (0, 255, 0), 2)
-
+        res = None
         if name=="Unknown":
+            if time() - now > 30:
+                iter_names = []
+                now = time()
             pass
         else:
-            name = (name)
+            now = time()
+            print("iter_names : ",iter_names)
+            if iter<limit_thresh:
+                if name not in iter_names:
+                    iter_names[name] = 1
+                iter+=1
+                iter_names[name]+=1
+            else:
+                iter = 0
+                name =  max(iter_names.keys())
+                res = update_sheet(name)
+                iter_names = {}
             print(name)
-            update_sheet(name)
-        return frame
+        return frame, res
 
 if __name__ == "__main__":
     pass

@@ -20,6 +20,12 @@
 </head>
 
 <body>
+    <div class="alert-container">
+        <div class="alert" id="alert">
+            <p id="err-msg"></p>
+            <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
+        </div>
+    </div>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -38,14 +44,20 @@
             </div>
         </div>
         <div class="content-review">
-            <!-- <div class="card-out card-out-rev">
+            <div class="card-out card-out-rev">
                 <div class="card">
                     <div id="proj" class="container">
-                        <a id="id-no">{{ id_no }} </a>
-                        <a id="time">{{ logged_in }}</a>
+                        <h3 class="text"> Employee ID</h3>
+                        <h3 class="res-box box" id="eid">Nill</h3>
+                        <h3 class="text"> Employee Name</h3>
+                        <h3 class="res-box box" id="ename">Nill</h3>
+                        <h3 class="text">Entry Time </h3>
+                        <h3 class="res-box box" id="entry-time">Nill</h3>
+                        <h3 class="text"> Exit Time</h3>
+                        <h3 class="res-box box" id="exit-time">Nill</h3>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
 
             <form action="/manual" method="post">
@@ -73,9 +85,6 @@
                     <button type="submit" class="button" name="button" value="Manual Entry">Manual Entry</button>
 
                 </div>
-                {% if error %}
-                <p class="error"><strong>Error:</strong> {{ error }}
-                    {% endif %}
             </form>
 
 
@@ -85,6 +94,61 @@
     <div class="footer">
         <h4 class="foot-text">Created by aditya29</h4>
     </div>
+
+
+    <script>
+        // this.document.getElementsByClassName("alert").style.display = "none";
+        var temp;
+        var alert_cls = this.document.getElementsByClassName("alert");
+
+        function disappear() {
+            this.document.getElementByClass("alert").style.display = 'none';
+        }
+
+
+        function clear_text() {
+            this.document.getElementById("eid").innerText = "Nill";
+            this.document.getElementById("ename").innerText = "Nill";
+            this.document.getElementById("entry-time").innerText = "Nill";
+            this.document.getElementById("exit-time").innerText = "Nill";
+            console.log("resetted");
+            setTimeout(fetch_cont, 1000);
+        }
+
+        async function fetch_cont() {
+            let result = await (fetch("/attendance_results"));
+            let data = await (result.clone().json())
+
+            if (data !== null) {
+                this.document.getElementById("alert").style.display = "none";
+                this.document.getElementById("eid").innerText = data["id"];
+                this.document.getElementById("ename").innerText = data["name"];
+                this.document.getElementById("entry-time").innerText = data["entry"];
+                this.document.getElementById("exit-time").innerText = data["exit"];
+                if (data["dup"] == "True") {
+                    console.log("duplicate detected");
+                    this.document.getElementById("err-msg").innerText = "Duplicate person Detected"
+                    this.document.getElementsByClassName("alert")[0].style.display = "flex"
+                    this.document.getElementsByClassName("alert")[0].style.display = "none"
+
+
+                } else {
+                    this.document.getElementById("err-msg").innerText = "Attendance Registered !";
+                    this.document.getElementsByClassName("alert")[0].style.background.color = "green";
+                    this.document.getElementsByClassName("alert")[0].style.display = "flex";
+                    this.document.getElementsByClassName("alert")[0].style.display = "none"
+
+                    console.log("no duplicate detected");
+                }
+                setTimeout(clear_text, 1500);
+            } else {
+                setTimeout(fetch_cont, 500);
+            }
+            console.log(data);
+
+        }
+        fetch_cont()
+    </script>
 
 </body>
 
