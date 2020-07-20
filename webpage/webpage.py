@@ -7,9 +7,16 @@ import sys
 import encode_faces as ef
 import recognize_video as recog
 import json
+from flask_socketio import SocketIO
+
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+
+app.logger.addHandler(logging.StreamHandler(stdout))
+app.config['DEBUG'] = True
+socketio = SocketIO(app)
 
 str_res = None
 

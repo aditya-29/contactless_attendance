@@ -7,6 +7,10 @@ import cv2
 import utils as u
 # import threading
 
+import base64
+import io
+from imageio import imread
+
 cap = None
 
 today = date.today()
@@ -182,6 +186,17 @@ def logs_check():       #check for the availability of today's log file if not c
     else:
         print("[INFO] excel sheet exists")
     return logs_path
+
+def base64_to_cv(data):
+    b64_string = data.decode()
+
+    # reconstruct image as an numpy array
+    img = imread(io.BytesIO(base64.b64decode(b64_string)))
+
+    cv2_img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    return cv2_img
+
+
 
 if __name__ == "__main__":
     pass
