@@ -3,6 +3,10 @@
     width: 75px;
 }
 
+body {
+    overflow: hidden;
+}
+
 .link:active {
     background: #303030;
 }
@@ -12,6 +16,13 @@
     .navbar-btn {
         float: left;
     }
+}
+
+.download { 
+    margin-right: 2vh;
+    width: auto;
+    background-color: royalblue;
+    
 }
 
 .alert-container {
