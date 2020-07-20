@@ -76,7 +76,7 @@ def attendance_results():
 def attendance():
     print("[INFO] attendance thread started")
     path = u.logs_check()
-    print(str_res)
+
     # if str_res != None:
     #     flash([str_res["name"], str_res["id"], str_res["entry"], str_res["exit"],str_res["dup"]])
     return render_template("attendance.html")
@@ -152,13 +152,15 @@ def video_feed_attendance():
 def capture():
     id = request.form["id"]
     id = str(id).upper()
-    temp_pwd = request.form["pwd"]
+    temp_pwd = str(request.form["pwd"])
     if temp_pwd == pwd:
         camera = Camera()
         stamp = camera.capture(id) 
-        return render_template("/capture.html")
+        flash("photo saved")
+        return render_template("/capture.html", error="green")
     else:
-        return render_template("/capture.html")
+        flash("password incorrect")
+        return render_template("/capture.html", error="#f44336")
 
 
 @app.route("/take_photos", methods = ["POST", "GET"])
@@ -167,6 +169,7 @@ def retrieve_details():
     r = request
     u.add_user(r)
     flash("user added successfully")
+
     return redirect(url_for("register"))
 
 @app.route("/train", methods = ["POST", "GET"])
@@ -174,10 +177,12 @@ def retrieve_details():
 def train():
     print("[INFO] training Selected")
     print("[INFO] it might take long time to complete")
+    flash("Training started...")
     ef.encode()
-    return redirect(url_for("view_page"))
-    
+    flash("Training completed !!!")
+    return render_template("/capture.html", error="black")
 
+    
 
 
 

@@ -29,7 +29,7 @@ class Camera(object):
         frame = self.get_frame()
         if frame is not None:
             ret, jpeg = cv.imencode('.jpg', frame)
-            return jpeg.tobytes()
+            return jpeg.tobytes(), ""
 
     def capture(self, id):
         frame = self.get_frame()

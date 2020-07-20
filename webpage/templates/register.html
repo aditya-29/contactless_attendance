@@ -19,20 +19,20 @@
 </head>
 
 <body>
-    <!-- {% block content %} -->
+    {% block content %}
     <div class="alert-container-left">
-        <!-- {% for message in get_flashed_messages() %} -->
+        {% for message in get_flashed_messages() %}
         <div class="alert-left">
             <div id="err-msg-cont">
             <p id="err-msg">{{ message }}</p>
             </div>
             <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
         </div>
-        <!-- {% endfor %} -->
+        {% endfor %}
 
-        <!-- {% block page_content %}{% endblock %} -->
+        {% block page_content %}{% endblock %}
     </div>
-    <!-- {% endblock %} -->
+    {% endblock %}
 
 
     <nav class="navbar navbar-inverse">

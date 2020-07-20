@@ -19,10 +19,12 @@
 
 <body>
     {% block content %}
-    <div class="alert-container">
-        {% for message in get_flashed_messages() %}
-        <div class="alert">
-            <p id="msg">{{ message }}</p>
+    <div class="alert-container-left">
+        {% for message in get_flashed_messages()[-1:] %}
+        <div class="alert-left" style="background-color:{{ error }};">
+            <div id="err-msg-cont">
+            <p id="err-msg">{{ message }}</p>
+            </div>
             <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
         </div>
         {% endfor %}
@@ -69,17 +71,9 @@
                 </div>
 
                 <div id="btn-box">
-                    <!-- <a href=/save_pic> <input class="button" value="Take Photo" /></a>
-                    <a href=/capture> <input class="button" value="Over-Ride" /></a>
-                    <a href=/capture> <input class="button" value="Over-Ride" /></a> -->
                     <button type="submit" class="button" name="button" value="Take Photo">Take Photo</button>
                     <a href=/train> <input class="button" value="Train" /></a>
-                    <!-- <button type="submit" class="button">over-ride</button> -->
-
                 </div>
-                {% if error %}
-                <p class="error"><strong>INFO:</strong> {{ error }}
-              {% endif %}
             </form>
 
         </div>

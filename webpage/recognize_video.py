@@ -65,9 +65,10 @@ def update_sheet(id,duplicate_check = True):
 
     now = dt.now()
     name, cat = get_name(id)
+    print("[INFO] NAME : ", name, " CAT : " ,cat)
     if name == None:
         return
-    print("[INFO] NAME : ", name, " CAT : " ,cat)
+    # print("[INFO] NAME : ", name, " CAT : " ,cat)
 
     if duplicate_check:
         check = check_dup(id, now)
