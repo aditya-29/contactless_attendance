@@ -24,7 +24,7 @@
         {% for message in get_flashed_messages() %}
         <div class="alert-left">
             <div id="err-msg-cont">
-            <p id="err-msg">{{ message }}</p>
+                <p id="err-msg">{{ message }}</p>
             </div>
             <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
         </div>
@@ -43,8 +43,9 @@
             <ul class="nav navbar-nav">
                 <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link active"><a href=/register>New
                             Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a
-                                href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout">
-                                <a class="btn btn-danger download navbar-btn" href="../../logs" download="20-07-2020.xlsx" type="submit" value="download"></a>
+                                href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
+                            <a id="download-action" href="../../logs"><input
+                                    class="btn btn-danger download navbar-btn" type="submit" value="download" /></a>
                             <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
         </div>
     </nav>
@@ -64,21 +65,24 @@
                                 <h3 class="text req"> Employee ID</h3>
                                 <h3 class="text req" style="color: red;"> * </h3>
                             </div>
-                            <input class="box" type="text" name="id" placeholder="ID" required="required" style="margin-top: 0.5em;" />
+                            <input class="box" type="text" name="id" placeholder="ID" required="required"
+                                style="margin-top: 0.5em;" />
 
                             <h6></h6>
                             <div style="display: 'flex'; flex-direction: 'column';">
                                 <h3 class="text req"> Employee Name</h3>
                                 <h3 class="text req" style="color: red;"> * </h3>
                             </div>
-                            <input class="box" type="text" name="name" placeholder="Name" required="required" style="margin-top: 0.5em;"/>
+                            <input class="box" type="text" name="name" placeholder="Name" required="required"
+                                style="margin-top: 0.5em;" />
 
                             <h6></h6>
                             <div style="display: 'flex'; flex-direction: 'column';">
                                 <h3 class="text req"> Employee Category</h3>
                                 <h3 class="text req" style="color: red;"> * </h3>
                             </div>
-                            <input class="box" type="text" name="category" placeholder="Category" required="required" style="margin-top: 0.5em;"/>
+                            <input class="box" type="text" name="category" placeholder="Category" required="required"
+                                style="margin-top: 0.5em;" />
 
 
                             <h3 class="text"> Employee Department</h3>
@@ -170,7 +174,7 @@
                             <h3 class="text"> Mobile Number</h3>
                             <input class="box" type="text" name="mobile" placeholder="Mobile" />
 
-                            <h3 class="text"> Alternate Mobile Number</h3>
+                            <h3 cla"ss="text"> Alternate Mobile Number</h3>
                             <input class="box" type="text" name="alternate mobile" placeholder="Mobile" />
 
                             <h3 class="text"> Email ID</h3>
@@ -197,6 +201,13 @@
     <div class="footer">
         <h4 class="foot-text">Created by aditya29</h4>
     </div>
+    <!-- <script>
+        var today = new Date();
+        var file = today.getDate()-1 + "-" + today.getMonth() + "-" + today.getFullYear() + ".xlsx";
+        $(document).ready(function () {
+            $("#download-action").attr("download", date);
+        })
+    </script> -->
 </body>
 
 </html>

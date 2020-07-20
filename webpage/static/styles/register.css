@@ -8,6 +8,16 @@ body {
     display: inline;
 }
 
+
+
+
+.download:hover {
+    background-color: cornflowerblue;
+    color:black;
+}
+
+
+
 .content {
     display: flex;
     flex-wrap: wrap;
