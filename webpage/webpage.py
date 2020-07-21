@@ -106,8 +106,6 @@ def gen(camera):
     global str_res
     while True:
         frame, str_res = camera.get_feed()
-        print("----------------str_res-----------")
-        print(str_res)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -203,11 +201,11 @@ def download():
     strIO = u.excel_download(app.config["UPLOAD_FOLDER"] + file_name)
 
     print("[INFO] filename : ", file_name)
-    print(app.config["UPLOAD_FOLDER"])
+    # print(app.config["UPLOAD_FOLDER"])
 
     full_name = app.config["UPLOAD_FOLDER"] + file_name
 
-    print("exists : ",os.path.exists(full_name))
+    # print("exists : ",os.path.exists(full_name))
 
     return send_file(full_name, attachment_filename = file_name, as_attachment=True, cache_timeout=0)
 

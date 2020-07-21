@@ -49,8 +49,6 @@ def check_dup(id,now):
         if list_ent[i] == str(id):
             index.append(i)
 
-    print("=---------======index=========")
-    print(index)
     if len(index)==0:           #if there are no prev values
         return [index,"entry"]
     else:                        #if there is a prev value

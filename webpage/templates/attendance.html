@@ -128,13 +128,14 @@
             this.document.getElementById("ename").innerText = "Nill";
             this.document.getElementById("entry-time").innerText = "Nill";
             this.document.getElementById("exit-time").innerText = "Nill";
-            console.log("resetted");
+            this.document.getElementById("err-msg").innerText = "Video feed Started";
+            // console.log("resetted");
             setTimeout(fetch_cont, 1200);
         }
         async function fetch_cont() {
             let result = await (fetch("/attendance_results"));
             let data = await (result.clone().json());
-            console.log("data : ", data);
+            // console.log("data : ", data);
 
             if (data !== null) {
                 this.document.getElementById("eid").innerText = data["id"];
@@ -146,7 +147,7 @@
                     $('.alert-container').delay(1000).fadeToggle();
 
 
-                    console.log("duplicate detected");
+                    // console.log("duplicate detected");
                     this.document.getElementsByClassName("alert")[0].style.backgroundColor = "#f44336";
                     this.document.getElementById("err-msg").innerText = "Duplicate person Detected";
                     this.document.getElementById("exit-time").innerText = "NIll";
@@ -159,14 +160,14 @@
                     this.document.getElementsByClassName("alert")[0].style.backgroundColor = "green";
                     this.document.getElementById("exit-time").innerText = data["exit"];
 
-                    console.log("no duplicate detected");
+                    // console.log("no duplicate detected");
                 }
                 setTimeout(clear_text, 1700);
 
             } else {
                 setTimeout(fetch_cont, 700);
             }
-            console.log(data);
+            // console.log(data);
 
         }
         fetch_cont()
