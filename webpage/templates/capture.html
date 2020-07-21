@@ -23,7 +23,7 @@
         {% for message in get_flashed_messages()[-1:] %}
         <div class="alert-left" style="background-color:{{ error }};">
             <div id="err-msg-cont">
-            <p id="err-msg">{{ message }}</p>
+                <p id="err-msg">{{ message }}</p>
             </div>
             <div class="close-btn" onclick="this.parentElement.style.display='none';">&times</div>
         </div>
@@ -39,11 +39,13 @@
                 <a class="navbar-brand" href="#">Admin Panel</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link active"><a href=/register>New
-                            Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a
-                                href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
-                            <a id="download-action" href="../../logs"><input
-                                    class="btn btn-danger download navbar-btn" type="submit" value="download" /></a>
+                <li class="link"><a href=/attendance>Attendance </a> </li> 
+                <li class="link active"><a href=/register>New Employee</a> </li>
+                <li class="link active"><a href=/capture>Capture </a> </li> 
+            </ul> <a href=/logout>
+                 <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
+                 <a id="download-action" href="/download"><input
+                    class="btn btn-danger download navbar-btn" type="submit" value="download" /></a>
                             <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
         </div>
     </nav>
@@ -55,7 +57,7 @@
             </div>
         </div>
         <div class="content-review">
-            <form action= "/save_pic" method="post">
+            <form action="/save_pic" method="post">
 
                 <div class="card-out card-out-rev">
                     <div class="card">

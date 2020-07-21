@@ -5,10 +5,11 @@ import time
 from datetime import date
 import cv2
 import utils as u
+import xlsxwriter
 # import threading
-
+import time
 import base64
-import io
+from io import BytesIO
 from imageio import imread
 
 cap = None
@@ -41,7 +42,9 @@ users_col = ["s.no", "id", "name", "category", "department", "age", "address lin
 def users_init():
     global xl
     df = pd.DataFrame(columns=users_col)
-    df.to_excel(xl_path, index=False)
+    # df.to_excel(xl_path, index=False)
+    excel_save(df, xl_path)
+    # time.sleep(1)
     xl = pd.read_excel(xl_path)
 
     print("sheet saved")
@@ -65,7 +68,9 @@ def auth_init():
     global auth
 
     df = pd.DataFrame(columns=["id", "name", "pwd"])
-    df.to_excel(auth_path, index=False)
+    # df.to_excel(auth_path, index=False)
+    excel_save(df, auth_path)
+    # time.sleep(1)
     auth = pd.read_excel(auth_path)
 
 def map_col(col):
@@ -136,7 +141,9 @@ def add_user(r):
     else:
         xl.loc[res,1:] = col[1:]
     xl_sno = list(xl["s.no"])[-1]
-    xl.to_excel(xl_path, index = False)
+    # xl.to_excel(xl_path, index = False)
+    excel_save(xl, xl_path)
+    # time.sleep(1)
     xl = pd.read_excel(xl_path) 
 
     print("sheet updated")
@@ -180,7 +187,9 @@ def logs_check():       #check for the availability of today's log file if not c
         logs_path = logs_dir + str(date) + ".xlsx"
 
         df = pd.DataFrame(columns=(logs_col))
-        df.to_excel(logs_path, index = False)
+        # df.to_excel(logs_path, index = False)
+        excel_save(df, logs_path)
+        # time.sleep(1)
         print("[INFO] excel sheet created")
     
     else:
@@ -196,6 +205,28 @@ def base64_to_cv(data):
     cv2_img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     return cv2_img
 
+
+def excel_save(df, path):
+    writer = pd.ExcelWriter(path, engine = "xlsxwriter")
+    df.to_excel(writer, sheet_name = "sheet1", index = False)
+    writer.save()
+    writer.close()
+
+
+def excel_download(filename):
+    now = time.time()
+    time.sleep(3)
+    strIO = BytesIO()
+    temp_df = pd.read_excel(filename)
+    print(temp_df.head())
+    excel_writer = pd.ExcelWriter(strIO, engine = "xlsxwriter")
+    temp_df.to_excel(excel_writer, sheet_name = "sheet1")
+    # time.sleep(1)
+    excel_data = strIO.getvalue()
+    strIO.seek(0)
+
+
+    return strIO
 
 
 if __name__ == "__main__":

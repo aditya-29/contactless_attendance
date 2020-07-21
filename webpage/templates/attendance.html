@@ -46,10 +46,10 @@
                 <a class="navbar-brand" href="#">Admin Panel</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="link"><a href=/attendance>Attendance </a> </li> <li class="link active"><a href=/register>New
+                <li class="link active"><a href=/attendance >Attendance </a> </li> <li class="link" ><a href=/register>New
                             Employee</a> </li> <li class="link"><a href=/capture>Capture </a> </li> </ul> <a
                                 href=/logout> <input class="btn btn-danger navbar-btn" type=”submit” value="logout"></a>
-                            <a id="download-action" href="../../logs"><input
+                                <a id="download-action" href="/download"><input
                                     class="btn btn-danger download navbar-btn" type="submit" value="download" /></a>
                             <!-- <button class="btn btn-danger navbar-btn" href="/logout" method="post">Logout</button> -->
         </div>
@@ -65,13 +65,13 @@
                 <div class="card">
                     <div id="proj" class="container">
                         <h3 class="text"> Employee ID</h3>
-                        <h3 class="res-box box" id="eid">Nill</h3>
+                        <h3 class="res-box box" id="eid">NILL</h3>
                         <h3 class="text"> Employee Name</h3>
-                        <h3 class="res-box box" id="ename">Nill</h3>
+                        <h3 class="res-box box" id="ename">NILL</h3>
                         <h3 class="text">Entry Time </h3>
-                        <h3 class="res-box box" id="entry-time">Nill</h3>
+                        <h3 class="res-box box" id="entry-time">NILL</h3>
                         <h3 class="text"> Exit Time</h3>
-                        <h3 class="res-box box" id="exit-time">Nill</h3>
+                        <h3 class="res-box box" id="exit-time">NILL</h3>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
             this.document.getElementById("entry-time").innerText = "Nill";
             this.document.getElementById("exit-time").innerText = "Nill";
             console.log("resetted");
-            setTimeout(fetch_cont, 1000);
+            setTimeout(fetch_cont, 1200);
         }
         async function fetch_cont() {
             let result = await (fetch("/attendance_results"));
@@ -160,10 +160,10 @@
 
                     console.log("no duplicate detected");
                 }
-                setTimeout(clear_text, 1500);
+                setTimeout(clear_text, 1700);
 
             } else {
-                setTimeout(fetch_cont, 500);
+                setTimeout(fetch_cont, 700);
             }
             console.log(data);
 

@@ -43,21 +43,31 @@ def get_name(id):
 def check_dup(id,now):
     # id = int(id)
     # entry_list = refresh()
-    index = entry_list.index[entry_list["id"] == id].tolist()
+    index = []
+    list_ent = list(map(str, entry_list["id"].tolist()))
+    for i in range(len(list_ent)):
+        if list_ent[i] == str(id):
+            index.append(i)
+
+    print("=---------======index=========")
+    print(index)
     if len(index)==0:           #if there are no prev values
-        return "entry"
+        return [index,"entry"]
     else:                        #if there is a prev value
         prev = entry_list.iloc[index[-1], 4]   
         prev = dt.strptime(prev, "%H:%M:%S")
         if (now - prev).seconds > time_interval:
             exit_t_s = entry_list.iloc[index[-1], 5]
+            print(exit_t_s)
+            print("-----------------no duplicate----------")
+            print(exit_t_s, type(exit_t_s))
             if exit_t_s == "":
-                return "exit"
+                return [index, "exit"]
             else:
                 exit_t = dt.strptime(exit_t_s, "%H:%M:%S")
                 if (now-exit_t).seconds > time_interval:
-                    return "entry"
-        return None
+                    return [index, "entry"]
+        return index, None
 
 
 def update_sheet(id,duplicate_check = True):
@@ -71,7 +81,7 @@ def update_sheet(id,duplicate_check = True):
     # print("[INFO] NAME : ", name, " CAT : " ,cat)
 
     if duplicate_check:
-        check = check_dup(id, now)
+        index, check = check_dup(id, now)
     else:
         check = None
     
@@ -81,7 +91,7 @@ def update_sheet(id,duplicate_check = True):
         if entry_list["s.no"].to_list() == []:
             serial_no = 1        
         else:
-            serial_no = entry_list["s.no"].to_list()[-1]+1
+            serial_no = int(entry_list["s.no"].to_list()[-1])+1
 
         entry_time = now.strftime("%H:%M:%S")
 
@@ -94,9 +104,9 @@ def update_sheet(id,duplicate_check = True):
 
         entry_list = entry_list.append(row, ignore_index = True)
 
-
-        entry_list.to_excel(xl_file, index = False)
-        Time.sleep(0.5)
+        u.excel_save(entry_list, xl_file)
+        # entry_list.to_excel(xl_file, index = False)
+        # Time.sleep(1)
         entry_list = refresh()
         # print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
@@ -104,7 +114,7 @@ def update_sheet(id,duplicate_check = True):
             
     elif check == "exit":           #directs to exit route
         print("---------------exit-------------")
-        index = entry_list.index[entry_list["id"] == id].tolist()
+        # index = entry_list.index[entry_list["id"] == id].tolist()
         index = int(index[-1])
 
         name = entry_list.iloc[index, 1]
@@ -114,14 +124,16 @@ def update_sheet(id,duplicate_check = True):
 
         entry_list.iloc[index, 5] = exit_time
 
-        entry_list.to_excel(xl_file, index = False)
+        u.excel_save(entry_list, xl_file)
+        # entry_list.to_excel(xl_file, index = False)
+        # Time.sleep(1)
         entry_list = refresh()
         print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
         return {"entry": entry_time, "exit" : exit_time, "id": str(id), "name": name, "dup" : "False"}
 
     else:     
-        index = entry_list.index[entry_list["id"] == id].tolist()
+        # index = entry_list.index[entry_list["id"] == id].tolist()
         index = int(index[-1])
 
         name = entry_list.iloc[index, 1]
@@ -238,6 +250,8 @@ class Camera(object):
                 res = update_sheet(name)
                 iter_names = {}
             print(name)
+            print("-----------res------------")
+            print(res)
         return frame, res
 
 if __name__ == "__main__":

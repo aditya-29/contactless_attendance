@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, Response, url_for, redirect, flash
+from flask import Flask, request, render_template, Response, url_for, redirect, flash, send_file, send_from_directory
 import utils as u
 from camera import Camera
 from recognize_video import Camera as Camera_recog
@@ -7,16 +7,19 @@ import sys
 import encode_faces as ef
 import recognize_video as recog
 import json
-from flask_socketio import SocketIO
-
+from time import localtime, strftime
+from datetime import date
+from io import BytesIO
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+upload_folder = "../logs/"
+app.config["UPLOAD_FOLDER"] = upload_folder
 
-app.logger.addHandler(logging.StreamHandler(stdout))
+
 app.config['DEBUG'] = True
-socketio = SocketIO(app)
 
 str_res = None
 
@@ -189,7 +192,25 @@ def train():
     flash("Training completed !!!")
     return render_template("/capture.html", error="black")
 
-    
+
+@app.route("/download", methods = ["POST", "GET"])
+
+def download():
+    print("[INFO] downloading today's file")
+    today = date.today()
+    today = today.strftime("%d-%m-%Y")
+    file_name   =  today +".xlsx"
+
+    strIO = u.excel_download(app.config["UPLOAD_FOLDER"] + file_name)
+
+    print("[INFO] filename : ", file_name)
+    print(app.config["UPLOAD_FOLDER"])
+
+    full_name = app.config["UPLOAD_FOLDER"] + file_name
+
+    print("exists : ",os.path.exists(full_name))
+
+    return send_file(full_name, attachment_filename = file_name, as_attachment=True, cache_timeout=0)
 
 
 

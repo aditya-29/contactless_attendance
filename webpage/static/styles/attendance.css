@@ -61,7 +61,7 @@ img {
 }
 
 #proj {
-    height: 40vh;
+    height: auto;
     width:25vw;
     margin-bottom: 5vh;
 }
@@ -127,4 +127,9 @@ img {
 }
 .foot-text {
     color: #fefefe;
+}
+
+
+.res-box {
+    margin-top:0vh;
 }
