@@ -82,8 +82,11 @@ def update_sheet(id,duplicate_check = True):
 
     if duplicate_check:
         index, check = check_dup(id, now)
+        print("-------index---------", index)
+
     else:
         check = None
+        return
     
     if check == "entry":            #no prev entries
         print("-----------------entry----------------------")
@@ -110,7 +113,7 @@ def update_sheet(id,duplicate_check = True):
         entry_list = refresh()
         # print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
-        return {"entry" : entry_time, "exit" : "NILL", "id" : str(id), "name": name, "dup" : "False"}
+        return {"entry" : str(entry_time), "exit" : "NILL", "id" : str(id), "name": str(name), "dup" : "False"}
             
     elif check == "exit":           #directs to exit route
         print("---------------exit-------------")
@@ -130,7 +133,7 @@ def update_sheet(id,duplicate_check = True):
         entry_list = refresh()
         print(entry_list.head())
         print("[INFO] time taken to update sheet : ",(dt.now()-now).seconds)
-        return {"entry": entry_time, "exit" : exit_time, "id": str(id), "name": name, "dup" : "False"}
+        return {"entry": str(entry_time), "exit" : str(exit_time), "id": str(id), "name": str(name), "dup" : "False"}
 
     else:     
         # index = entry_list.index[entry_list["id"] == id].tolist()
@@ -143,7 +146,7 @@ def update_sheet(id,duplicate_check = True):
         print("")
         print('duplicate person detected')
         print("")
-        return {"entry" : entry_time, "exit" : exit_time, "id" : str(id), "name" : name, "dup": "True"}
+        return {"entry" : str(entry_time), "exit" : str(exit_time), "id" : str(id), "name" :str(name), "dup": "True"}
 
 
 

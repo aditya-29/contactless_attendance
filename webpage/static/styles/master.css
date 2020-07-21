@@ -3,9 +3,6 @@
     width: 75px;
 }
 
-body {
-    overflow: hidden;
-}
 
 .link:active {
     background: #303030;

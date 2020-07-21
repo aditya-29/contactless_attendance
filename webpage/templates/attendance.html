@@ -134,6 +134,7 @@
         async function fetch_cont() {
             let result = await (fetch("/attendance_results"));
             let data = await (result.clone().json());
+            console.log("data : ", data);
 
             if (data !== null) {
                 this.document.getElementById("eid").innerText = data["id"];

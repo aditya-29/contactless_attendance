@@ -74,12 +74,14 @@ def logout():
 
 def gen_res():
     json_str = json.dumps(str_res)
+    
     yield json_str
 
 
 @app.route("/attendance_results", methods = ["POST", "GET"])
 def attendance_results():
-    return Response(gen_res(), content_type="application/json")
+    temp = gen_res()
+    return Response(temp, content_type="application/json")
 
 @app.route("/attendance", methods = ["POST", "GET"])
 
@@ -104,14 +106,11 @@ def gen(camera):
     global str_res
     while True:
         frame, str_res = camera.get_feed()
+        print("----------------str_res-----------")
+        print(str_res)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-# def gen_recog(camera_recog):
-#     while True:
-#         frame = camera_recog.get_feed()
-#         yield (b'--frame\r\n'
-#                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route("/capture", methods=["POST", "GET"])
